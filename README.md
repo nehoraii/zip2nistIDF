@@ -17,6 +17,12 @@ Structure:
         - Fields:
             Number, description, mnemonic
 
+## Encode/Decode
+
+    ts-node src/encode.ts
+    ts-node src/decode.ts
+
+
 ## Conversion
 
 ### wsq -> bmp:

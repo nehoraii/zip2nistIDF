@@ -2,8 +2,8 @@ import * as fs from 'node:fs';
 
 import { nistDecode, NistFile } from 'node-nist';
 
-const buffer = fs.readFileSync('data/300056859.tdf');
-// const buffer = fs.readFileSync('data/215270121T_001.tdf');
+// const buffer = fs.readFileSync('data/300056859.tdf');
+const buffer = fs.readFileSync('data/215270121T_001.tdf');
 
 const decodeResult = nistDecode(buffer);
 if (decodeResult.tag === 'success') {
