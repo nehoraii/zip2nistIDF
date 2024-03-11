@@ -3,6 +3,8 @@ import * as fs from 'node:fs';
 import { nistEncode, NistFile } from 'node-nist';
 import { Fields1, Fields2, Fields13, EAT_VALUES, EAO_VALUES, CFO_VALUES, CAL_VALUES } from './enums';
 
+const imageBuffer = fs.readFileSync('data/export/215270121T_001.tdf/type13_2.wsq');
+
 const nist: NistFile = {
     1: {
         [Fields1.VER]: '0503',
@@ -48,7 +50,7 @@ const nist: NistFile = {
             [Fields13.FGP]: ['1'],
             [Fields13.EVN]: '001',
             [Fields13.LTN]: '001',
-            [Fields13.DATA]: Buffer.from([0x41, 0x42, 0x43]),
+            [Fields13.DATA]: imageBuffer,
         },
     ],
 };
