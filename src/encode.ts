@@ -3,6 +3,11 @@ import * as fs from 'node:fs';
 import { nistEncode, NistFile } from 'node-nist';
 import { Fields1, Fields2, Fields13, EAT_VALUES, EAO_VALUES, CFO_VALUES, CAL_VALUES } from './enums';
 
+// TODO:
+// - Use fsPromises instead of sync fs
+// - Interface to shell commands: via script? Directly?
+// - unzip, convert, cwsq
+
 const imageBuffer = fs.readFileSync('data/export/215270121T_001.tdf/type13_2.wsq');
 
 const nist: NistFile = {

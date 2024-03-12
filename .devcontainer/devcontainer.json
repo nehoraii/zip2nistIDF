@@ -5,7 +5,7 @@
     "build": {
         "context": "..",
         "dockerfile": "../Dockerfile",
-        "target": "dev"
+        "target": "deploy"
     },
     // Features to add to the dev container. More info: https://containers.dev/features.
     "features": {
@@ -18,7 +18,7 @@
     // Use 'postCreateCommand' to run commands after the container is created.
     // "postCreateCommand": "uname -a",
     "postCreateCommand": {
-        "zsh": "cp .devcontainer/zsh/* /home/pyphot/.oh-my-zsh/custom/"
+        "zsh": "cp .devcontainer/zsh/* /home/nist/.oh-my-zsh/custom/"
     },
     "securityOpt": [
         "seccomp=unconfined"

@@ -31,6 +31,7 @@ RUN apt-get update;
 RUN apt-get install -y --no-install-recommends \
         man \
         imagemagick \
+        unzip \
         ca-certificates \
         curl \
     ;
@@ -39,3 +40,6 @@ RUN curl -fsSL   https://deb.nodesource.com/setup_21.x | bash - && \
     apt-get install -y nodejs
 
 COPY --from=build /usr/local /usr/local
+
+RUN useradd nist -d /home/nist -u 1000 -m
+USER nist
