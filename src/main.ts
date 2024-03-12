@@ -8,6 +8,7 @@ import * as child_process from 'node:child_process';
 import * as metadata from './metadata';
 import { encode } from './encode';
 import { bmp2wsq } from './bmp2wsq';
+import { withExtension } from './util';
 
 
 async function main() {
@@ -24,10 +25,9 @@ async function main() {
     try {
         console.log(`Extracting zip file ${zipFile} to ${tempDir}`);
 
-        child_process.execFileSync(
-            'unzip',
-            ['-d', tempDir, zipFile],
-        );
+        child_process.execFileSync('unzip', [
+            '-d', tempDir, zipFile,
+        ]);
 
         const files = await fs.readdir(tempDir);
         console.log('Files in zip:', files);
@@ -52,10 +52,11 @@ async function main() {
 
         var wsqFiles: string[] = [];
 
+
         for (const bmpFile of bmpFiles) {
-            const wsqFile = bmpFile.replace(/\.bmp$/, '.wsq');
+            const wsqFile = withExtension('.wsq', bmpFile);
             console.log(`Convert: ${bmpFile} -> ${wsqFile}`);
-            bmp2wsq(bmpFile, wsqFile);
+            bmp2wsq(bmpFile);
             wsqFiles.push(wsqFile);
         }
 
