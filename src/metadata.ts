@@ -25,8 +25,7 @@ export function parse(rawData: Buffer): Metadata {
     const fields = metadata['data'][0]['fields'];
     var data: any = {};
 
-    for (const idx in fields) {
-        const field = fields[idx];
+    for (const field of fields) {
         data[field['name']] = field['value'];
     }
 

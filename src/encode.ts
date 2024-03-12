@@ -1,6 +1,6 @@
 import * as fs from 'node:fs';
 
-import { nistEncode, NistFile } from 'node-nist';
+import * as nist from 'node-nist';
 import { Fields1, Fields2, Fields13, EAT_VALUES, EAO_VALUES, CFO_VALUES, CAL_VALUES } from './enums';
 import { Metadata } from './metadata';
 
@@ -9,10 +9,34 @@ import { Metadata } from './metadata';
 // - Interface to shell commands: via script? Directly?
 // - unzip, convert, cwsq
 
-function encode(metadata: Metadata) {
-    const imageBuffer = fs.readFileSync('data/export/215270121T_001.tdf/type13_2.wsq');
+function makeRecord(metadata: Metadata, imageBuffer: Buffer): nist.NistType13Record {
+    return {
+        [Fields13.IMP]: '4',
+        [Fields13.SRC]: 'IDF/DIGC',
+        [Fields13.LCD]: '20210127211821',
+        [Fields13.HLL]: '800',
+        [Fields13.VLL]: '750',
+        [Fields13.SLC]: '1',
+        [Fields13.THPS]: '500',
+        [Fields13.TVPS]: '500',
+        [Fields13.CGA]: 'WSQ20',
+        [Fields13.BPX]: '8',
+        [Fields13.FGP]: ['1'],
+        [Fields13.EVN]: '001',
+        [Fields13.LTN]: '001',
+        [Fields13.DATA]: imageBuffer,
+    };
+}
 
-    const nist: NistFile = {
+export function encode(metadata: Metadata, wsqFiles: string[]) {
+    var imageRecords: nist.NistType13Record[] = [];
+
+    for (const wsqFile of wsqFiles) {
+        const imageBuffer = fs.readFileSync(wsqFile);
+        imageRecords.push(makeRecord(metadata, imageBuffer));
+    }
+
+    const nistFile: nist.NistFile = {
         1: {
             [Fields1.VER]: '0503',
             [Fields1.TOT]: 'MPS',
@@ -20,7 +44,7 @@ function encode(metadata: Metadata) {
             [Fields1.PRY]: '4',
             [Fields1.DAI]: 'IL/IDFAFIS',
             [Fields1.ORI]: 'IL/IDFDIGC',
-            [Fields1.TCN]: 'LS000L2402160033',
+            [Fields1.TCN]: 'LS000L2402160033', // YYSSSSSSSSC
             [Fields1.NSR]: '19.68',
             [Fields1.NTR]: '19.68',
         },
@@ -42,27 +66,10 @@ function encode(metadata: Metadata) {
             [Fields2.EVNT]: metadata.event_name,
             [Fields2.CAL]: metadata.case_acq_loc_type, // CAL_VALUES.Field,
         },
-        13: [
-            {
-                [Fields13.IMP]: '4',
-                [Fields13.SRC]: 'IDF/DIGC',
-                [Fields13.LCD]: '20210127211821',
-                [Fields13.HLL]: '800',
-                [Fields13.VLL]: '750',
-                [Fields13.SLC]: '1',
-                [Fields13.THPS]: '500',
-                [Fields13.TVPS]: '500',
-                [Fields13.CGA]: 'WSQ20',
-                [Fields13.BPX]: '8',
-                [Fields13.FGP]: ['1'],
-                [Fields13.EVN]: '001',
-                [Fields13.LTN]: '001',
-                [Fields13.DATA]: imageBuffer,
-            },
-        ],
+        13: imageRecords,
     };
 
-    const encodeResult = nistEncode(nist, {});
+    const encodeResult = nist.nistEncode(nistFile, {});
     if (encodeResult.tag === 'success') {
         const buffer = encodeResult.value;
         // perform action on successfull encode, such as sending out the buffer

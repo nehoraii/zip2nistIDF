@@ -6,6 +6,9 @@ import * as os from 'node:os';
 import * as child_process from 'node:child_process';
 
 import * as metadata from './metadata';
+import { encode } from './encode';
+import { bmp2wsq } from './bmp2wsq';
+
 
 async function main() {
     const zipFile = process.argv[2];
@@ -29,13 +32,34 @@ async function main() {
         const files = await fs.readdir(tempDir);
         console.log('Files in zip:', files);
 
+        let md: metadata.Metadata | undefined;
+
         for (const file of files) {
-            if (file.endsWith('.json')) {
+            if (file.toLowerCase().endsWith('.json')) {
                 const rawData = await fs.readFile(path.join(tempDir, file));
-                const md = metadata.parse(rawData);
+                md = metadata.parse(rawData);
                 console.log('Metadata:', md);
             }
         }
+
+        if (md == undefined) {
+            throw new Error('No metadata file found in zip');
+        }
+
+        const bmpFiles = files
+            .filter(f => f.toLowerCase().endsWith('.bmp'))
+            .map(f => path.join(tempDir, f));
+
+        var wsqFiles: string[] = [];
+
+        for (const bmpFile of bmpFiles) {
+            const wsqFile = bmpFile.replace(/\.bmp$/, '.wsq');
+            console.log(`Convert: ${bmpFile} -> ${wsqFile}`);
+            bmp2wsq(bmpFile, wsqFile);
+            wsqFiles.push(wsqFile);
+        }
+
+        encode(md, wsqFiles);
 
     } finally {
         await fs.rm(tempDir, { recursive: true });
