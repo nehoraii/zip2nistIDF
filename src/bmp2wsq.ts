@@ -1,10 +1,14 @@
-import * as path from 'node:path';
 import * as child_process from 'node:child_process';
 import { withExtension } from './util';
 
 export function bmp2wsq(bmpFile: string) {
     const rawFile = withExtension('.raw', bmpFile);
 
+    // <r bitrate>
+    // determines the amount of lossy compression.
+    // Suggested settings:
+    //    r bitrate = 2.25 yields around 5:1 compression
+    //    r bitrate = 0.75 yields around 15:1 compression
     const bitRate = '0.75';
 
     let child = child_process.spawnSync('convert', [

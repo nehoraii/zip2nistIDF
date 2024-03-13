@@ -9,7 +9,7 @@ import { Metadata } from './metadata';
 // - Interface to shell commands: via script? Directly?
 // - unzip, convert, cwsq
 
-function makeRecord(metadata: Metadata, imageBuffer: Buffer): nist.NistType13Record {
+function makeRecord(md: Metadata, imageBuffer: Buffer): nist.NistType13Record {
     return {
         [Fields13.IMP]: '4',
         [Fields13.SRC]: 'IDF/DIGC',
@@ -28,12 +28,12 @@ function makeRecord(metadata: Metadata, imageBuffer: Buffer): nist.NistType13Rec
     };
 }
 
-export function encode(metadata: Metadata, wsqFiles: string[]) {
+export function encode(md: Metadata, wsqFiles: string[]) {
     var imageRecords: nist.NistType13Record[] = [];
 
     for (const wsqFile of wsqFiles) {
         const imageBuffer = fs.readFileSync(wsqFile);
-        imageRecords.push(makeRecord(metadata, imageBuffer));
+        imageRecords.push(makeRecord(md, imageBuffer));
     }
 
     const nistFile: nist.NistFile = {
@@ -50,21 +50,21 @@ export function encode(metadata: Metadata, wsqFiles: string[]) {
         },
         2: {
             [Fields2.SYS]: '0503',
-            [Fields2.CNO]: metadata.case_no, //'215270121T',
-            [Fields2.SEX]: metadata.sex, // 'M',
-            [Fields2.EVN]: metadata.evid_no, // '001',
-            [Fields2.EAD]: metadata.evid_acq_date, // FIXME: Convert -> '202101272118',
-            [Fields2.EAT]: metadata.evid_acq_type, // EAT_VALUES.NIST,
-            [Fields2.EALO]: metadata.evid_acq_loc,
-            [Fields2.EAO]: metadata.evid_acq_orig, // EAO_VALUES.Lab,
-            [Fields2.EAQ]: metadata.evid_acq_no,
-            [Fields2.EAF]: metadata.evid_acq_first_name,
-            [Fields2.EAL]: metadata.evid_acq_last_name,
+            [Fields2.CNO]: md.case_no, //'215270121T',
+            [Fields2.SEX]: md.sex, // 'M',
+            [Fields2.EVN]: md.evid_no, // '001',
+            [Fields2.EAD]: md.evid_acq_date, // FIXME: Convert -> '202101272118',
+            [Fields2.EAT]: md.evid_acq_type, // EAT_VALUES.NIST,
+            [Fields2.EALO]: md.evid_acq_loc,
+            [Fields2.EAO]: md.evid_acq_orig, // EAO_VALUES.Lab,
+            [Fields2.EAQ]: md.evid_acq_no,
+            [Fields2.EAF]: md.evid_acq_first_name,
+            [Fields2.EAL]: md.evid_acq_last_name,
             [Fields2.LCE]: '12',
-            [Fields2.CFO]: metadata.orig_cause, // CFO_VALUES.Corpse,
+            [Fields2.CFO]: md.orig_cause, // CFO_VALUES.Corpse,
             [Fields2.CSR]: '',
-            [Fields2.EVNT]: metadata.event_name,
-            [Fields2.CAL]: metadata.case_acq_loc_type, // CAL_VALUES.Field,
+            [Fields2.EVNT]: md.event_name,
+            [Fields2.CAL]: md.case_acq_loc_type, // CAL_VALUES.Field,
         },
         13: imageRecords,
     };
@@ -73,10 +73,9 @@ export function encode(metadata: Metadata, wsqFiles: string[]) {
     if (encodeResult.tag === 'success') {
         const buffer = encodeResult.value;
         // perform action on successfull encode, such as sending out the buffer
-        fs.writeFileSync('file.nist', buffer);
     } else {
         const error = encodeResult.error;
         // perform action on unsuccessfull encode, such as logging an error
-        console.log(error);
+        throw new Error(error.toString());
     }
 }
