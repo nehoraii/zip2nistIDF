@@ -7,7 +7,7 @@ import * as child_process from 'node:child_process';
 
 import * as metadata from './metadata';
 import { encode } from './encode';
-import { bmp2wsq } from './bmp2wsq';
+import * as bmp2wsq from './bmp2wsq';
 import { withExtension } from './util';
 
 
@@ -46,21 +46,20 @@ async function main() {
             throw new Error('No metadata file found in zip');
         }
 
-        const bmpFiles = files
-            .filter(f => f.toLowerCase().endsWith('.bmp'))
-            .map(f => path.join(tempDir, f));
+        let wsqInfos: bmp2wsq.WsqInfo[] = [];
 
-        var wsqFiles: string[] = [];
-
-
-        for (const bmpFile of bmpFiles) {
-            const wsqFile = withExtension('.wsq', bmpFile);
-            console.log(`Convert: ${bmpFile} -> ${wsqFile}`);
-            bmp2wsq(bmpFile);
-            wsqFiles.push(wsqFile);
+        for (let i = 1; i <= md.finger_count; i++) {
+            const bmpFile = path.join(tempDir, `${md.case_no}_${i}.bmp`);
+            console.log(`Convert: ${bmpFile}`);
+            const w = bmp2wsq.bmp2wsq(bmpFile);
+            wsqInfos[i] = w;
         }
 
-        encode(md, wsqFiles);
+        const nistBuffer = encode(md, wsqInfos, tempDir);
+
+        const nistFile = withExtension('.tdf', zipFile);
+        console.log(`Writing NIST file: ${nistFile}`);
+        fs.writeFile(nistFile, nistBuffer);
 
     } finally {
         await fs.rm(tempDir, { recursive: true });

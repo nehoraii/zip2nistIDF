@@ -1,7 +1,7 @@
 export interface Metadata {
     case_no: string; //'964664644',
-    finger_count: string; //1,
-    evid_acq_date: string; //'2024-02-13T11:39:47.142+00:00',
+    finger_count: number; //1,
+    evid_acq_date: Date; //'2024-02-13T11:39:47.142+00:00',
     evid_acq_no: string; // '212351571',
     evid_acq_first_name: string; // 'תומר',
     evid_acq_last_name: string; // 'צב',
@@ -31,8 +31,8 @@ export function parse(rawData: Buffer): Metadata {
 
     return {
         case_no: data['case_no'].toString(),
-        finger_count: data['finger_count'].toString(),
-        evid_acq_date: data['evid_acq_date'].toString(),
+        finger_count: Number(data['finger_count']),
+        evid_acq_date: new Date(data['evid_acq_date']),
         evid_acq_no: data['evid_acq_no'].toString(),
         evid_acq_first_name: data['evid_acq_first_name'].toString(),
         evid_acq_last_name: data['evid_acq_last_name'].toString(),

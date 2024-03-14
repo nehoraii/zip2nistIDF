@@ -1,7 +1,13 @@
 import * as child_process from 'node:child_process';
 import { withExtension } from './util';
 
-export function bmp2wsq(bmpFile: string) {
+export interface WsqInfo {
+    width: number;
+    height: number;
+    depth: number;
+}
+
+export function bmp2wsq(bmpFile: string): WsqInfo {
     const rawFile = withExtension('.raw', bmpFile);
 
     // <r bitrate>
@@ -31,4 +37,10 @@ export function bmp2wsq(bmpFile: string) {
         rawFile,
         '-raw_in', `${width},${height},${depth}`,
     ]);
+
+    return {
+        width: Number(width),
+        height: Number(height),
+        depth: Number(depth),
+    }
 }

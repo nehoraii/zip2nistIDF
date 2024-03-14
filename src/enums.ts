@@ -5,7 +5,7 @@ export enum Fields1 {
     CNT = 3, // File content
 
     TOT = 4, // Type of transaction: 'MPS'
-    DAT = 5, // Date: YYYYMMDD
+    DAT = 5, // Date: 20240122 YYYYMMDD
     PRY = 6, // Priority: {1: High, 4: Medium, 8: Low}
     DAI = 7, // Destination Agency Identifier: 'IL/IDFAFIS'
     ORI = 8, // Originating Agency Identifier: 'IL/IDFDIGC'
@@ -56,7 +56,7 @@ export enum Fields2 {
     // If the case is a training case the Case Number will end with a “T”
     SEX = 39, // Sex: Male = M, Female = F, Unknown = U
     EVN = 400, // Evidence Number: 001
-    EAD = 401, // Evidence Acquisition Date: 20240216020140
+    EAD = 401, // Evidence Acquisition Date: 20240216020140 YYYYMMDDHHMMSS
     EAT = 402, // Evidence Acquisition Type: EAT_VALUES
     EALO = 403, // Evidence Acquisition Location: Where Location is 100 char. Free Text field
     EAO = 404, // Evidence Acquisition Origin: EAO_VALUES
