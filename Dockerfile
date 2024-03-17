@@ -36,7 +36,7 @@ RUN apt-get install -y --no-install-recommends \
         curl \
     ;
 
-RUN curl -fsSL   https://deb.nodesource.com/setup_21.x | bash - && \
+RUN curl -fsSL https://deb.nodesource.com/setup_21.x | bash - && \
     apt-get install -y nodejs
 
 COPY --from=build /usr/local /usr/local
