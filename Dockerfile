@@ -39,7 +39,14 @@ RUN apt-get install -y --no-install-recommends \
 RUN curl -fsSL https://deb.nodesource.com/setup_21.x | bash - && \
     apt-get install -y nodejs
 
+# NBIS command line tools: cwsq, dwsq
 COPY --from=build /usr/local /usr/local
+
+# App
+COPY . /opt/zip2nist
+WORKDIR /opt/zip2nist
 
 RUN useradd nist -d /home/nist -u 1000 -m
 USER nist
+
+CMD ["./src/index.ts"]
