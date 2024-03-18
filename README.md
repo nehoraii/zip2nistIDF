@@ -1,3 +1,23 @@
+# zip2nist
+
+This service converts a ZIP file containing BMP fingeprints and associated metadata (see example in [data/964664644.zip](data/964664644.zip)) to the standard NIST-ITL ("TDF") format.
+
+It can be run from the command line to convert a local file:
+
+    $ npm install
+    $ ./src/main.ts data/964664644.zip
+
+The associated Dockerfile runs as a web service, which can be accessed as follows:
+
+    $ curl -v -H 'content-type: application/zip/bmp' localhost:3000/zip2nist --data-binary @data/data/964664644.zip -o 964664644.tdf
+
+
+## Dependencies
+
+- Handling the NIST-ITL format is done with the help of [node-nist](https://github.com/ivosh/node-nist).
+- Conversion of images between BMP and WSQ is done with the help of [ImageMagick](https://imagemagick.org)'s `convert` tool and the [NBIS](https://www.nist.gov/services-resources/software/nist-biometric-image-software-nbis) command line tools `cwsq` and `dwsq`.
+
+
 ## References
 
 The Information Technology Laboratory (ITL) of the National Institute of Standards and Technology (NIST):
@@ -16,28 +36,3 @@ Structure:
         Type-13: Variable-resolution latent friction ridge image
         - Fields:
             Number, description, mnemonic
-
-## Encode/Decode
-
-    ts-node src/encode.ts
-    ts-node src/decode.ts
-
-
-## Conversion
-
-### wsq -> bmp:
-
-```sh
-dwsq raw sample_image.wsq -r
-convert -depth 8 -size 545x622x1 gray:sample_image.raw sample_image.bmp
-```
-
-### bmp -> wsq:
-
-```sh
-# convert sample_image.bmp -depth 8 -size 545x622x1 gray:sample_image.raw
-# cwsq raw sample_image.raw -r 0.75
-
-convert 964664644_1.bmp -depth 8 -size 800x750x1 gray:964664644_1.raw
-cwsq 0.75 wsq 964664644_1.raw -raw_in 800,750,8
-```
