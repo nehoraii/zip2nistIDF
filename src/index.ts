@@ -1,29 +1,33 @@
-import * as fs from 'node:fs/promises';
-import * as path from 'node:path';
-import * as os from 'node:os';
+#!/usr/bin/npx ts-node
 
 import express from 'express';
-import { convert } from "./convert";
+import { zip2nist } from "./convert";
 
 
 const { PORT = 3000 } = process.env;
 const app = express();
 
-// TODO: expressAsyncHandler? See bridgeReceiver/mainRouter.ts
-app.post('/zip2nist', async function (req, res) {
-    const zipFile = req.body; // TODO: Check for valid zip file and/or mime type
+app.post('/zip2nist', async (req, res) => {
+    console.log("Received fingerprint message");
 
-    const tempPrefix = 'request-';
-    const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), tempPrefix));
+    let data: Uint8Array[] = [];
 
-    // Save request to file
-    fs.writeFile()
+    req.on("data", (chunk: Uint8Array) => {
+        data.push(chunk);
+    });
 
-    const responseBuffer = await convert(zipFile, false);
-
-    // Send response
-    // res.send('Hello World');
-})
+    req.on("end", async () => {
+        try {
+            const zipData = Buffer.concat(data);
+            const responseData: Buffer = await zip2nist(zipData);
+            res.send(responseData);
+            res.end();
+        } catch (e) {
+            res.statusCode = 400;
+            return res.end(`Error: ${e}`);
+        }
+    });
+});
 
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);

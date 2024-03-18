@@ -59,3 +59,22 @@ export async function convert(zipFile: string, writeFile: boolean = false): Prom
         await fs.rm(tempDir, { recursive: true });
     }
 }
+
+export async function zip2nist(zipData: Buffer): Promise<Buffer> {
+    // TODO: Check for valid zip file and/or mime type
+
+    const tempPrefix = 'data-';
+    const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), tempPrefix));
+
+    try {
+        // Save request body to file
+        const zipFile = path.join(tempDir, "data.zip");
+        await fs.writeFile(zipFile, zipData);
+        console.log(`Written zip file to ${zipFile}`);
+
+        const nistBuffer = await convert(zipFile, false);
+        return nistBuffer;
+    } finally {
+        await fs.rm(tempDir, { recursive: true });
+    }
+}
