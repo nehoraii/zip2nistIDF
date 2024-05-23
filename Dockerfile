@@ -38,6 +38,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_21.x | bash - && \
 
 # Install TypeScript and ts-node
 RUN npm install -g typescript ts-node
+RUN npm install -g --save-dev @types/node @types/express
 
 # NBIS command line tools: cwsq, dwsq
 COPY --from=build /usr/local /usr/local
