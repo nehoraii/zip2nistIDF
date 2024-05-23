@@ -83,7 +83,3 @@ jobs:
       - name: Rollout deployment restart
         run: |
           kubectl rollout restart deployment ${{ inputs.app_name }} --namespace ${{ inputs.k8s_namespace }}
-
-      - name: Invalidate CloudFront cache
-        if: ${{ inputs.environment_name  == 'development'}}
-        run: aws cloudfront create-invalidation --distribution-id ${{ vars.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
