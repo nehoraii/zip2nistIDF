@@ -1,3 +1,5 @@
+#!/usr/bin/npx ts-node
+
 import { convert } from "./convert";
 
 async function main() {

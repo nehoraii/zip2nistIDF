@@ -1,3 +1,5 @@
+#!/usr/bin/npx ts-node
+
 import express from "express";
 import { zip2nist } from "./convert";
 

@@ -9,7 +9,6 @@ RUN apt-get update && \
 
 RUN update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-12 100
 
-
 #####################################################
 FROM dev AS build
 
@@ -20,7 +19,6 @@ RUN ./setup.sh /usr/local --STDLIBS --without-X11
 RUN make config
 RUN make it
 RUN make install LIBNBIS=no
-
 
 #####################################################
 FROM ubuntu:20.04 as deploy
@@ -37,6 +35,9 @@ RUN apt-get install -y --no-install-recommends \
 
 RUN curl -fsSL https://deb.nodesource.com/setup_21.x | bash - && \
     apt-get install -y nodejs
+
+# Install TypeScript and ts-node
+RUN npm install -g typescript ts-node
 
 # NBIS command line tools: cwsq, dwsq
 COPY --from=build /usr/local /usr/local
