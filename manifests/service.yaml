@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: zip2nist-service
+  namespace: team-tikchalal-dvash
+  labels:
+    app: zip2nist
+    project: zip2nist
+    env: dev
+spec:
+  selector:
+    app: zip2nist
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 80
+  type: ClusterIP
