@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zip2nist
+  namespace: team-tikchalal-dvash
+  labels:
+    app: zip2nist
+    project: zip2nist
+    env: dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zip2nist
+  template:
+    metadata:
+      labels:
+        app: zip2nist
+        project: zip2nist
+        env: dev
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "2222"
+    spec:
+      serviceAccountName: tikchalal-sa-dvash
+      imagePullSecrets:
+        - name: team-tikchalal-pat
+      containers:
+        - name: tabalab-server
+          image: ghcr.io/digitalidf/zip2nist/zip2nist:development
+          resources:
+            limits:
+              cpu: "0.5"
+              memory: "512Mi"
+            requests:
+              cpu: "0.25"
+              memory: "256Mi"
+          securityContext:
+            readOnlyRootFilesystem: true
+          ports:
+            - containerPort: 3000
+          imagePullPolicy: Always
