@@ -1,0 +1,23 @@
+name: (Server) build and deploy [dev]
+
+on:
+  push:
+    paths:
+      - "src/**"
+      - .github/workflows/server-dev.yaml
+      - .github/workflows/server-general-deployment.yaml
+    branches:
+      - dev
+  workflow_dispatch:
+
+jobs:
+  trigger-cicd:
+    uses: ./.github/workflows/server-general-deployment.yaml
+    with:
+      docker_build_context: .
+      dockerfile: ./Dockerfile
+      environment_name: development
+      runner: dev-il
+      app_name: zip2nist
+      k8s_namespace: team-tikchalal-dvash
+    secrets: inherit

@@ -14,7 +14,6 @@ RUN update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-12 100
 FROM dev AS build
 
 COPY nbis/ /src
-
 WORKDIR /src
 RUN ./setup.sh /usr/local --STDLIBS --without-X11
 
@@ -49,4 +48,4 @@ WORKDIR /opt/zip2nist
 RUN useradd nist -d /home/nist -u 1000 -m
 USER nist
 
-CMD ["./src/index.ts"]
+CMD ["npm", "start"]
