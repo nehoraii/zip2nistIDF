@@ -36,18 +36,16 @@ RUN apt-get install -y --no-install-recommends \
 RUN curl -fsSL https://deb.nodesource.com/setup_21.x | bash - && \
     apt-get install -y nodejs
 
-# Install TypeScript and ts-node
-RUN npm install -g typescript ts-node
-RUN npm install -g --save-dev @types/node @types/express
-
 # NBIS command line tools: cwsq, dwsq
 COPY --from=build /usr/local /usr/local
 
+RUN npm run build
+
 # App
-COPY . /opt/zip2nist
+COPY ./dist /opt/zip2nist
 WORKDIR /opt/zip2nist
 
 RUN useradd nist -d /home/nist -u 1000 -m
 USER nist
 
-CMD ["./src/index.ts"]
+CMD node index.js
