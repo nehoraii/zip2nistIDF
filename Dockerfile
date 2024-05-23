@@ -41,8 +41,6 @@ RUN curl -fsSL https://deb.nodesource.com/setup_21.x | bash - && \
 # NBIS command line tools: cwsq, dwsq
 COPY --from=build /usr/local /usr/local
 
-RUN npm install
-
 # App
 COPY . /opt/zip2nist
 WORKDIR /opt/zip2nist
