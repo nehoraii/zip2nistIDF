@@ -26,7 +26,7 @@ spec:
       imagePullSecrets:
         - name: team-tikchalal-pat
       containers:
-        - name: tabalab-server
+        - name: zip2nist
           image: ghcr.io/digitalidf/zip2nist/zip2nist:development
           resources:
             limits:

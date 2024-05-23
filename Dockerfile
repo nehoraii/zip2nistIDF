@@ -48,4 +48,4 @@ WORKDIR /opt/zip2nist
 RUN useradd nist -d /home/nist -u 1000 -m
 USER nist
 
-CMD ["npm", "start"]
+CMD ["./src/index.ts"]
