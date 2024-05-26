@@ -48,5 +48,5 @@ RUN npm install
 RUN useradd nist -d /home/nist -u 1000 -m
 USER nist
 
-EXPOSE 80
+EXPOSE 3000
 CMD ["./src/index.ts"]
