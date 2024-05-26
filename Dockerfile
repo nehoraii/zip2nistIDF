@@ -43,6 +43,8 @@ COPY --from=build /usr/local /usr/local
 COPY . /opt/zip2nist
 WORKDIR /opt/zip2nist
 
+RUN npm install
+
 RUN useradd nist -d /home/nist -u 1000 -m
 USER nist
 
