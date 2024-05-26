@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - "src/**"
+      - Dockerfile
       - .github/workflows/server-dev.yaml
       - .github/workflows/server-general-deployment.yaml
     branches:
