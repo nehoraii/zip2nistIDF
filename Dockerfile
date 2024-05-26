@@ -39,13 +39,11 @@ RUN curl -fsSL https://deb.nodesource.com/setup_21.x | bash - && \
 # NBIS command line tools: cwsq, dwsq
 COPY --from=build /usr/local /usr/local
 
-RUN npm run build
-
 # App
-COPY ./dist /opt/zip2nist
+COPY . /opt/zip2nist
 WORKDIR /opt/zip2nist
 
 RUN useradd nist -d /home/nist -u 1000 -m
 USER nist
 
-CMD node index.js
+CMD ["./src/index.ts"]
