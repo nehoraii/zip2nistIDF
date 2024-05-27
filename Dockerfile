@@ -25,6 +25,8 @@ FROM ubuntu:20.04 as deploy
 
 RUN apt-get update;
 
+RUN apt-get install lsof;
+
 RUN apt-get install -y --no-install-recommends \
         man \
         imagemagick \
