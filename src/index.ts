@@ -13,11 +13,12 @@ app.post("/zip2nist", async (req, res) => {
 
   req.on("data", (chunk: Uint8Array) => {
     data.push(chunk);
+    console.info(`Received data chunk, current chunk total: ${data.length}`);
   });
 
   req.on("end", async () => {
     try {
-      console.info("Request finished receiving")
+      console.info("Request finished receiving");
       const zipData = Buffer.concat(data);
       const responseData: Buffer = await zip2nist(zipData);
       res.send(responseData);
