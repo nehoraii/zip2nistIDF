@@ -42,7 +42,7 @@ app.post("/zip2nist", async (req, res) => {
   });
 
   req.on("error", (err) => {
-    console.info(`Request error event: ${err}`);
+    console.info(`Request error event: ${err}`, ` : ${new Date()}`);
   });
 
   req.on("close", () => {
