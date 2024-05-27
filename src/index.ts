@@ -3,7 +3,7 @@
 import express from "express";
 import { zip2nist } from "./convert";
 
-const { PORT = 3000 } = process.env;
+const { PORT = 80 } = process.env;
 const app = express();
 
 app.post("/zip2nist", async (req, res) => {
