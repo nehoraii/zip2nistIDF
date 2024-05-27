@@ -16,7 +16,7 @@ app.post("/zip2nist", async (req, res) => {
       data.push(chunk);
       console.info(`Received data chunk, current chunk total: ${data.length}`);
     } catch (e) {
-      console.error(`Request data event raised an error: ${e}`);
+      console.info(`Request data event raised an error: ${e}`);
       return res.end(`Error: ${e}`);
     }
   });
@@ -30,13 +30,17 @@ app.post("/zip2nist", async (req, res) => {
       res.end();
     } catch (e) {
       res.statusCode = 400;
-      console.error(`Request end event raised an error: ${e}`);
+      console.info(`Request end event raised an error: ${e}`);
       return res.end(`Error: ${e}`);
     }
   });
 
   req.on("error", (err) => {
-    console.error(`Request error event: ${err}`);
+    console.info(`Request error event: ${err}`);
+  });
+
+  req.on("close", () => {
+    console.info(`Request closed`);
   });
 });
 
