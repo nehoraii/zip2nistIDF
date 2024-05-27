@@ -38,5 +38,5 @@ spec:
           securityContext:
             readOnlyRootFilesystem: true
           ports:
-            - containerPort: 4000
+            - containerPort: 3000
           imagePullPolicy: Always
