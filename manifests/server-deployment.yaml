@@ -37,6 +37,15 @@ spec:
               memory: "256Mi"
           securityContext:
             readOnlyRootFilesystem: true
+          volumeMounts:
+          - mountPath: /tmp
+            name: temp
           ports:
             - containerPort: 4000
           imagePullPolicy: Always
+
+      volumes:
+        - name: temp
+          emptyDir:
+            sizeLimit: 500Mi
+          

@@ -7,7 +7,7 @@ const { PORT = 3000 } = process.env;
 const app = express();
 
 app.post("/zip2nist", async (req, res) => {
-  console.log("Received fingerprint message");
+  console.info("Received fingerprint message");
 
   let data: Uint8Array[] = [];
 
@@ -17,6 +17,7 @@ app.post("/zip2nist", async (req, res) => {
 
   req.on("end", async () => {
     try {
+      console.info("Request finished receiving")
       const zipData = Buffer.concat(data);
       const responseData: Buffer = await zip2nist(zipData);
       res.send(responseData);
@@ -29,5 +30,5 @@ app.post("/zip2nist", async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`);
+  console.info(`Server is listening on port ${PORT}`);
 });
