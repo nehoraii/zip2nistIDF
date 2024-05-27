@@ -12,8 +12,12 @@ app.post("/zip2nist", async (req, res) => {
   let data: Uint8Array[] = [];
 
   req.on("data", (chunk: Uint8Array) => {
-    data.push(chunk);
-    console.info(`Received data chunk, current chunk total: ${data.length}`);
+    try {
+      data.push(chunk);
+      console.info(`Received data chunk, current chunk total: ${data.length}`);
+    } catch (e) {
+      return res.end(`Error: ${e}`);
+    }
   });
 
   req.on("end", async () => {
