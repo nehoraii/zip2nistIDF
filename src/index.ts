@@ -32,6 +32,7 @@ app.post("/zip2nist", async (req, res) => {
       console.info("Request finished receiving");
       const zipData = Buffer.concat(data);
       const responseData: Buffer = await zip2nist(zipData);
+      res.set({ "content-type": "application/octet-stream" });
       res.send(responseData);
       res.end();
     } catch (e) {
