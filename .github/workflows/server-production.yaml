@@ -1,0 +1,32 @@
+name: (Server) build and deploy [production]
+
+on:
+  push:
+    paths:
+      - "server/**"
+      - .github/workflows/server-production.yaml
+      - .github/workflows/general-deploy-prod.yaml
+      - .github/workflows/server-general-deployment.yaml
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  trigger-cicd-preprod:
+    uses: ./.github/workflows/server-general-deployment.yaml
+    with:
+      docker_build_context: .
+      dockerfile: ./Dockerfile
+      environment_name: preprod
+      runner: hr-il
+      app_name: zip2nist
+      k8s_namespace: tikchalal-preprod-dvash
+    secrets: inherit
+
+  trigger-cicd-prod:
+    needs: trigger-cicd-preprod
+    uses: ./.github/workflows/general-deploy-prod.yaml
+    with:
+      app_name: zip2nist
+      k8s_namespace: tikchalal-prod-dvash
+    secrets: inherit

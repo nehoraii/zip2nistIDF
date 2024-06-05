@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: zip2nist-service
+  namespace: tikchalal-preprod-dvash
+  labels:
+    app: zip2nist
+    project: zip2nist
+    env: preprod
+spec:
+  selector:
+    app: zip2nist
+  ports:
+    - protocol: TCP
+      port: 4000
+      targetPort: 3000
+  type: ClusterIP
