@@ -41,8 +41,7 @@ COPY --from=build /usr/local /usr/local
 # App
 COPY . /opt/zip2nist
 WORKDIR /opt/zip2nist
-RUN echo $(ls)
-RUN npm install --log-level verbose
+RUN npm install
 RUN npm i -g ts-node
 # RUN useradd nist -d /home/nist -u 1000 -m
 # USER root

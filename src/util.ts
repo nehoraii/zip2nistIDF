@@ -12,7 +12,5 @@ export function date2ymd(date: Date): string {
 export function date2ymdhms(date: Date): string {
     const [ymd, hms_] = date.toISOString().split('T');
     const hms = hms_.substring(0, 8);
-    ymd.replace(/-/g, '');
-    hms.replace(/[-:.]/g, '');
-    return ymd + hms;
+    return ymd.replace(/-/g, '') + hms.replace(/[-:.]/g, '');
 }
