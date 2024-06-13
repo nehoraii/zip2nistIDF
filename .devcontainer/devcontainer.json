@@ -20,6 +20,7 @@
   "postCreateCommand": {
     "zsh": "cp .devcontainer/zsh/* /home/nist/.oh-my-zsh/custom/"
   },
+  "overrideCommand": false,
   "securityOpt": ["seccomp=unconfined"],
   // Configure tool-specific properties.
   "customizations": {

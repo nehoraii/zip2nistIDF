@@ -1,4 +1,4 @@
-enum environment {
+export enum environment {
   development = "development",
   preprod = "preprod",
   production = "production",
@@ -36,7 +36,6 @@ export function parse(rawData: Buffer): Metadata {
   }
 
   const case_no = data["case_no"].toString();
-  data["environment"] === environment.preprod ?? case_no.concat("T");
 
   return {
     case_no: case_no,

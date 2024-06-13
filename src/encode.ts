@@ -4,7 +4,7 @@ import * as path from "node:path";
 import * as nist from "node-nist";
 import { WsqInfo } from "./bmp2wsq";
 import { Fields1, Fields13, Fields2 } from "./enums";
-import { Metadata } from "./metadata";
+import { Metadata, environment } from "./metadata";
 import { date2ymd, date2ymdhms } from "./util";
 
 function makeRecord(
@@ -55,7 +55,7 @@ export function encode(md: Metadata, wsqInfos: WsqInfo[], dir: string): Buffer {
     },
     2: {
       [Fields2.SYS]: "0503",
-      [Fields2.CNO]: md.case_no, //'215270121T',
+      [Fields2.CNO]: [environment.development, environment.preprod].includes(md.environment) ? md.case_no.concat('T') : md.case_no, //'215270121T',
       [Fields2.SEX]: md.sex, // 'M',
       [Fields2.EVN]: md.evid_no, // '001',
       [Fields2.EAD]: date2ymdhms(md.evid_acq_date), // '202101272118',
