@@ -1,42 +1,42 @@
 enum environment {
-  development,
-  preprod,
-  production,
+  development = "development",
+  preprod = "preprod",
+  production = "production",
 }
 export interface Metadata {
-  case_no: string //'964664644',
-  finger_count: number //1,
-  evid_acq_date: Date //'2024-02-13T11:39:47.142+00:00',
-  evid_acq_no: string // '212351571',
-  evid_acq_first_name: string // 'תומר',
-  evid_acq_last_name: string // 'צב',
-  evid_acq_type: string // 3,
-  evid_acq_orig: string // 3,
-  case_acq_loc_type: string // 3,
-  finger_order: string // '1',
-  scanner_id: string // 'WATSON_v2.0.1 (WM1129C-31900089-000K)',
-  extra_data: string // '{}',
-  evid_no: string // '001',
-  sex: string // 'F',
-  evid_acq_loc: string // 'רמת גן',
-  orig_cause: string // 3,
-  event_name: string // 'חכחכחכח',
-  environment: environment
+  case_no: string; //'964664644',
+  finger_count: number; //1,
+  evid_acq_date: Date; //'2024-02-13T11:39:47.142+00:00',
+  evid_acq_no: string; // '212351571',
+  evid_acq_first_name: string; // 'תומר',
+  evid_acq_last_name: string; // 'צב',
+  evid_acq_type: string; // 3,
+  evid_acq_orig: string; // 3,
+  case_acq_loc_type: string; // 3,
+  finger_order: string; // '1',
+  scanner_id: string; // 'WATSON_v2.0.1 (WM1129C-31900089-000K)',
+  extra_data: string; // '{}',
+  evid_no: string; // '001',
+  sex: string; // 'F',
+  evid_acq_loc: string; // 'רמת גן',
+  orig_cause: string; // 3,
+  event_name: string; // 'חכחכחכח',
+  environment: environment;
 }
 
 export function parse(rawData: Buffer): Metadata {
-  const metadata = JSON.parse(rawData.toString())
+  const metadata = JSON.parse(rawData.toString());
   // console.log('Metadata:', metadata);
 
-  const fields = metadata["data"][0]["fields"]
-  var data: any = {}
+  const fields = metadata["data"][0]["fields"];
+  var data: any = {};
 
   for (const field of fields) {
-    data[field["name"]] = field["value"]
+    data[field["name"]] = field["value"];
   }
 
-  const case_no = data["case_no"].toString()
-  data["environment"] === environment.preprod ?? case_no.concat("T")
+  const case_no = data["case_no"].toString();
+  data["environment"] === environment.preprod ?? case_no.concat("T");
 
   return {
     case_no: case_no,
@@ -57,5 +57,5 @@ export function parse(rawData: Buffer): Metadata {
     orig_cause: data["orig_cause"].toString(),
     event_name: data["event_name"].toString(),
     environment: data["environment"].toString(),
-  }
+  };
 }
