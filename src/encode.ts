@@ -55,7 +55,9 @@ export function encode(md: Metadata, wsqInfos: WsqInfo[], dir: string): Buffer {
     },
     2: {
       [Fields2.SYS]: "0503",
-      [Fields2.CNO]: md.case_no, //'215270121T',
+      [Fields2.CNO]: [environment.preprod].includes(md.environment)
+        ? md.case_no.concat("T")
+        : md.case_no, //'215270121T',
       [Fields2.SEX]: md.sex, // 'M',
       [Fields2.EVN]: md.evid_no, // '001',
       [Fields2.EAD]: date2ymdhms(md.evid_acq_date), // '202101272118',
