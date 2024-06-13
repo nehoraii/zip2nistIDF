@@ -24,7 +24,7 @@ spec:
     spec:
       serviceAccountName: tabalab-sa-preprod
       imagePullSecrets:
-        - name: team-tikchalal-pat
+        - name: tikchalal-preprod-pat
       containers:
         - name: zip2nist
           image: ghcr.io/digitalidf/zip2nist/zip2nist:preprod
