@@ -14,10 +14,6 @@ app.post("/zip2nist", async (req, res) => {
   req.on("data", (chunk: Uint8Array) => {
     try {
       data.push(chunk);
-      console.info(
-        `Received data chunk, current chunk total: ${data.length}`,
-        ` : ${new Date()}`
-      );
     } catch (e) {
       console.info(
         `Request data event raised an error: ${e}`,
