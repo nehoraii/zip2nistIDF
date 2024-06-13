@@ -4,7 +4,7 @@ import * as path from "node:path";
 import * as nist from "node-nist";
 import { WsqInfo } from "./bmp2wsq";
 import { Fields1, Fields13, Fields2 } from "./enums";
-import { Metadata } from "./metadata";
+import { Metadata, environment } from "./metadata";
 import { date2ymd, date2ymdhms } from "./util";
 
 function makeRecord(
