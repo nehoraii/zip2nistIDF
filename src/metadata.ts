@@ -1,3 +1,5 @@
+import { mapValues } from "lodash";
+
 export enum environment {
   development = "development",
   preprod = "preprod",
@@ -37,24 +39,26 @@ export function parse(rawData: Buffer): Metadata {
 
   const case_no = data["case_no"].toString();
 
-  return {
+  const md = {
     case_no: case_no,
     finger_count: Number(data["finger_count"]),
     evid_acq_date: new Date(data["evid_acq_date"]),
-    evid_acq_no: data["evid_acq_no"].toString(),
-    evid_acq_first_name: data["evid_acq_first_name"].toString(),
-    evid_acq_last_name: data["evid_acq_last_name"].toString(),
-    evid_acq_type: data["evid_acq_type"].toString(),
-    evid_acq_orig: data["evid_acq_orig"].toString(),
-    case_acq_loc_type: data["case_acq_loc_type"].toString(),
-    finger_order: data["finger_order"].toString(),
-    scanner_id: data["scanner_id"].toString(),
-    extra_data: data["extra_data"].toString(),
-    evid_no: data["evid_no"].toString(),
-    sex: data["sex"].toString(),
-    evid_acq_loc: data["evid_acq_loc"].toString(),
-    orig_cause: data["orig_cause"].toString(),
-    event_name: data["event_name"].toString(),
-    environment: data["environment"].toString(),
+    evid_acq_no: data["evid_acq_no"]?.toString(),
+    evid_acq_first_name: data["evid_acq_first_name"]?.toString(),
+    evid_acq_last_name: data["evid_acq_last_name"]?.toString(),
+    evid_acq_type: data["evid_acq_type"]?.toString(),
+    evid_acq_orig: data["evid_acq_orig"]?.toString(),
+    case_acq_loc_type: data["case_acq_loc_type"]?.toString(),
+    finger_order: data["finger_order"]?.toString(),
+    scanner_id: data["scanner_id"]?.toString(),
+    extra_data: data["extra_data"]?.toString(),
+    evid_no: data["evid_no"]?.toString(),
+    sex: data["sex"]?.toString(),
+    evid_acq_loc: data["evid_acq_loc"]?.toString(),
+    orig_cause: data["orig_cause"]?.toString(),
+    event_name: data["event_name"]?.toString(),
+    environment: data["environment"]?.toString(),
   };
+
+  return mapValues(md, (v) => v ?? "");
 }
