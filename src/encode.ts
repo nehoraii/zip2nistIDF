@@ -9,7 +9,7 @@ import { date2ymd, date2ymdhms } from "./util";
 
 function makeRecord(
   md: Metadata,
-  i: number,
+  fingerPosition: string,
   wsqInfo: WsqInfo,
   imageBuffer: Buffer
 ): nist.NistType13Record {
@@ -24,7 +24,7 @@ function makeRecord(
     [Fields13.TVPS]: "500",
     [Fields13.CGA]: "WSQ20",
     [Fields13.BPX]: wsqInfo.depth.toString(),
-    [Fields13.FGP]: [i.toString()], // TODO: Do we need to convert this to a scalar?
+    [Fields13.FGP]: [fingerPosition],
     [Fields13.EVN]: "001",
     [Fields13.LTN]: "001",
     [Fields13.DATA]: imageBuffer,
@@ -34,10 +34,12 @@ function makeRecord(
 export function encode(md: Metadata, wsqInfos: WsqInfo[], dir: string): Buffer {
   var imageRecords: nist.NistType13Record[] = [];
 
-  for (let i = 1; i <= md.finger_count; i++) {
-    const wsqFile = path.join(dir, `${md.case_no}_${i}.wsq`);
+  const fingers = md.finger_order.split(",");
+
+  for (const [index, finger] of fingers.entries()) {
+    const wsqFile = path.join(dir, `${md.case_no}_${finger}.wsq`);
     const imageBuffer = fs.readFileSync(wsqFile);
-    const r = makeRecord(md, i, wsqInfos[i], imageBuffer);
+    const r = makeRecord(md, finger, wsqInfos[index], imageBuffer);
     imageRecords.push(r);
   }
 
