@@ -11,6 +11,13 @@ The associated Dockerfile runs as a web service, which can be accessed as follow
 
     $ curl -v -H 'content-type: application/zip/bmp' localhost:3000/zip2nist --data-binary @data/data/964664644.zip -o 964664644.tdf
 
+## Workspace setup
+
+Zip2Nist relies on the [nbis](https://github.com/DigitalIDF/nbis) submodule in order to run. When cloning the repository, ensure cloning of submodules as well:
+    $ git clone --recurse-submodules https://github.com/DigitalIDF/zip2nist.git
+
+(Older versions of git may require [different syntax](https://stackoverflow.com/questions/1030169/pull-latest-changes-for-all-git-submodules))
+
 
 ## Dependencies
 

@@ -25,8 +25,8 @@ function makeRecord(
     [Fields13.CGA]: "WSQ20",
     [Fields13.BPX]: wsqInfo.depth.toString(),
     [Fields13.FGP]: [fingerPosition],
-    [Fields13.EVN]: "001",
-    [Fields13.LTN]: "001",
+    [Fields13.EVN]: md.evid_no,
+    [Fields13.LTN]: String(fingerPosition).padStart(2, "0"),
     [Fields13.DATA]: imageBuffer,
   };
 }
