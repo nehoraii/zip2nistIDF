@@ -65,13 +65,16 @@ export async function convert(
 
 function type2FileWriteEncoding(nistBuffer: Buffer, fileName: string) {
   const nistBufferString = nistBuffer.toString()
-  const type2StartIndex = nistBufferString.indexOf("")
-  const type2EndIndex = nistBufferString.indexOf("", type2StartIndex + 1)
+  const type2StartIndex = nistBufferString.indexOf(String.fromCharCode(0x1c))
+  const type2EndIndex = nistBufferString.indexOf(
+    String.fromCharCode(0x1c),
+    type2StartIndex + 1
+  )
   let type2String = nistBufferString.slice(type2StartIndex, type2EndIndex)
   const encodedBuffer = iconv.encode(type2String, "win1255")
 
   const type2Length = type2String
-    .slice(0, type2String.indexOf(""))
+    .slice(0, type2String.indexOf(String.fromCharCode(0x1d)))
     .split(":")[1]
 
   const type2DigitLength = type2Length.length
