@@ -64,7 +64,7 @@ export async function convert(
 }
 
 function type2FileWriteEncoding(nistBuffer: Buffer, fileName: string) {
-  const win1255Encoding = "win1255"
+  const encoding = "win1255"
   const nistBufferString = nistBuffer.toString()
   const type2StartIndex = nistBufferString.indexOf(String.fromCharCode(0x1c))
   const type2EndIndex = nistBufferString.indexOf(
@@ -72,7 +72,7 @@ function type2FileWriteEncoding(nistBuffer: Buffer, fileName: string) {
     type2StartIndex + 1
   )
   let type2String = nistBufferString.slice(type2StartIndex, type2EndIndex)
-  const encodedBuffer = iconv.encode(type2String, win1255Encoding)
+  const encodedBuffer = iconv.encode(type2String, encoding)
 
   const type2Length = type2String
     .slice(0, type2String.indexOf(String.fromCharCode(0x1d)))
@@ -86,7 +86,7 @@ function type2FileWriteEncoding(nistBuffer: Buffer, fileName: string) {
 
   type2String = type2String.replace(type2Length, newType2Length.toString())
 
-  const updatedEncodedBuffer = iconv.encode(type2String, win1255Encoding)
+  const updatedEncodedBuffer = iconv.encode(type2String, encoding)
 
   const type1String = nistBufferString.slice(0, type2StartIndex)
   const otherTypesString = nistBufferString.slice(type2EndIndex)
