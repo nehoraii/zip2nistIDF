@@ -47,5 +47,6 @@ RUN npm i -g ts-node
 # USER root
 
 EXPOSE 80 3000
+ENV NLS_LANG=HEBREW_ISRAEL.IW8MSWIN1255
 CMD ["ts-node", "src/index.ts"]
 # ENTRYPOINT ["tail", "-f", "/dev/null"]
