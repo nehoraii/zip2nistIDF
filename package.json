@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "express": "^4.19.2",
+    "iconv-lite": "^0.6.3",
     "lodash": "^4.17.21",
     "node-nist": "^0.9.0",
     "ts-node": "^10.9.2"

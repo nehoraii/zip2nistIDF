@@ -1,6 +1,7 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 
+import iconv from "iconv-lite";
 import * as nist from "node-nist";
 import { WsqInfo } from "./bmp2wsq";
 import { Fields1, Fields13, Fields2 } from "./enums";
@@ -29,7 +30,7 @@ function makeRecord(
     [Fields13.LTN]: String(fingerPosition).padStart(2, "0"),
     [Fields13.DATA]: imageBuffer,
   };
-}
+};
 
 export function encode(md: Metadata, wsqInfos: WsqInfo[], dir: string): Buffer {
   var imageRecords: nist.NistType13Record[] = [];
@@ -86,5 +87,5 @@ export function encode(md: Metadata, wsqInfos: WsqInfo[], dir: string): Buffer {
   }
 
   const buffer = encodeResult.value;
-  return buffer;
+  return iconv.encode(buffer.toString(), 'win-1255');
 }
