@@ -3,11 +3,11 @@ import * as fs from "node:fs/promises"
 import * as os from "node:os"
 import * as path from "node:path"
 
+import iconv from "iconv-lite"
 import * as bmp2wsq from "./bmp2wsq"
 import { encode } from "./encode"
 import * as metadata from "./metadata"
 import { withExtension } from "./util"
-import iconv from "iconv-lite"
 
 export async function convert(
   zipFile: string,
@@ -54,7 +54,7 @@ export async function convert(
     if (writeFile) {
       const nistFile = withExtension(".tdf", zipFile)
       console.info(`Writing NIST file: ${nistFile}`)
-      type2FileWriteEncoding(nistBuffer, nistFile)
+      fs.writeFile(nistFile, nistBuffer)
     }
 
     return nistBuffer
