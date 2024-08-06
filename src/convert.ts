@@ -3,7 +3,6 @@ import * as fs from "node:fs/promises"
 import * as os from "node:os"
 import * as path from "node:path"
 
-import iconv from "iconv-lite"
 import * as bmp2wsq from "./bmp2wsq"
 import { encode } from "./encode"
 import * as metadata from "./metadata"
@@ -61,39 +60,6 @@ export async function convert(
   } finally {
     await fs.rm(tempDir, { recursive: true })
   }
-}
-
-function type2FileWriteEncoding(nistBuffer: Buffer, fileName: string) {
-  const encoding = "win1255"
-  const nistBufferString = nistBuffer.toString()
-  const type2StartIndex = nistBufferString.indexOf(String.fromCharCode(0x1c))
-  const type2EndIndex = nistBufferString.indexOf(
-    String.fromCharCode(0x1c),
-    type2StartIndex + 1
-  )
-  let type2String = nistBufferString.slice(type2StartIndex, type2EndIndex)
-  const encodedBuffer = iconv.encode(type2String, encoding)
-
-  const type2Length = type2String
-    .slice(0, type2String.indexOf(String.fromCharCode(0x1d)))
-    .split(":")[1]
-
-  const type2DigitLength = type2Length.length
-
-  const newType2Length =
-    encodedBuffer.length +
-    (encodedBuffer.length.toString().length - type2DigitLength)
-
-  type2String = type2String.replace(type2Length, newType2Length.toString())
-
-  const updatedEncodedBuffer = iconv.encode(type2String, encoding)
-
-  const type1String = nistBufferString.slice(0, type2StartIndex)
-  const otherTypesString = nistBufferString.slice(type2EndIndex)
-
-  fs.writeFile(fileName, type1String)
-  fs.appendFile(fileName, updatedEncodedBuffer)
-  fs.appendFile(fileName, otherTypesString)
 }
 
 export async function zip2nist(zipData: Buffer): Promise<Buffer> {

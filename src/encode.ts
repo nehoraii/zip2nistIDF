@@ -1,7 +1,7 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 
-import * as nist from "node-nist";
+import * as nist from "../node-nist/src/index";
 import { WsqInfo } from "./bmp2wsq";
 import { Fields1, Fields13, Fields2 } from "./enums";
 import { Metadata, environment } from "./metadata";
