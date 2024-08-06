@@ -1,3 +1,6 @@
 [submodule "nbis"]
 	path = nbis
 	url = https://github.com/DigitalIDF/nbis.git
+[submodule "node-nist"]
+	path = node-nist
+	url = https://github.com/DigitalIDF/node-nist.git
