@@ -1,6 +1,6 @@
 import * as fs from 'node:fs';
 
-import { nistDecode, NistFile } from 'node-nist';
+import { nistDecode } from '../node-nist/src/index';
 
 // const buffer = fs.readFileSync('data/300056859.tdf');
 const buffer = fs.readFileSync('data/215270121T_001.tdf');
