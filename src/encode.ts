@@ -1,6 +1,7 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 
+import iconv from "iconv-lite";
 import * as nist from "../node-nist/src/index";
 import { WsqInfo } from "./bmp2wsq";
 import { Fields1, Fields13, Fields2 } from "./enums";
@@ -30,6 +31,11 @@ function makeRecord(
     [Fields13.DATA]: imageBuffer,
   };
 };
+
+const informationWriter = (data: nist.NistInformationItem) => {
+  if (typeof data == "string") return iconv.encode(data, "win1255")
+  return data;
+}
 
 export function encode(md: Metadata, wsqInfos: WsqInfo[], dir: string): Buffer {
   var imageRecords: nist.NistType13Record[] = [];
@@ -78,7 +84,23 @@ export function encode(md: Metadata, wsqInfos: WsqInfo[], dir: string): Buffer {
     13: imageRecords,
   };
 
-  const encodeResult = nist.nistEncode(nistFile, {});
+  const encodeResult = nist.nistEncode(nistFile, {
+    codecOptions: {
+      default: {
+        2: {
+          403: {
+            informationWriter
+          },
+          406: {
+            informationWriter
+          },
+          407: {
+            informationWriter
+          }
+        }
+      }
+    }
+  });
   if (encodeResult.tag !== "success") {
     const error = encodeResult.error;
     // perform action on unsuccessfull encode, such as logging an error
