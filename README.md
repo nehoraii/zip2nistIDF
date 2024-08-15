@@ -18,6 +18,22 @@ Zip2Nist relies on the [nbis](https://github.com/DigitalIDF/nbis) submodule in o
 
 (Older versions of git may require [different syntax](https://stackoverflow.com/questions/1030169/pull-latest-changes-for-all-git-submodules))
 
+### Troubleshooting
+
+If you encounter this error while building the Docker image:
+```bin
+ => ERROR [build 3/6] RUN ./setup.sh /usr/local --STDLIBS --without-X11                                                                                         0.3s 
+------
+ > [build 3/6] RUN ./setup.sh /usr/local --STDLIBS --without-X11:
+0.241 /bin/sh: 1: ./setup.sh: not found
+```
+
+You can resolve it by changing the file format of the `setup.sh` script in nbis. 
+1. Open WSL Ubuntu or any other distro that contains Vim
+2. Open the script in vim: `vim setup.sh`
+3. Enter command mode in vim `shift + :`
+4. Type the command: `set fileformat=unix`
+5. Exit with save: `:wq`
 
 ## Dependencies
 
