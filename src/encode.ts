@@ -2,7 +2,7 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 
 import iconv from "iconv-lite";
-import * as nist from "../node-nist/src/index";
+import * as nist from "node-nist";
 import { WsqInfo } from "./bmp2wsq";
 import { Fields1, Fields13, Fields2 } from "./enums";
 import { Metadata, environment } from "./metadata";
@@ -32,7 +32,7 @@ function makeRecord(
   };
 };
 
-const informationWriter = (data: nist.NistInformationItem) => {
+const informationEncoder = (data: nist.NistInformationItem) => {
   if (typeof data == "string") return iconv.encode(data, "win1255")
   return data;
 }
@@ -89,13 +89,16 @@ export function encode(md: Metadata, wsqInfos: WsqInfo[], dir: string): Buffer {
       default: {
         2: {
           403: {
-            informationWriter
+            informationEncoder
           },
           406: {
-            informationWriter
+            informationEncoder
           },
           407: {
-            informationWriter
+            informationEncoder
+          },
+          411: {
+            informationEncoder
           }
         }
       }
