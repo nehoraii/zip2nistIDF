@@ -22,8 +22,9 @@ export interface Metadata {
   sex: string; // 'F',
   evid_acq_loc: string; // 'רמת גן',
   orig_cause: string; // 3,
-  event_name: string; // 'חכחכחכח',
+  event_name: string; // 'אירוע משני',
   environment: environment;
+  case_reason: string; // 'אירוע ראשי
 }
 
 export function parse(rawData: Buffer): Metadata {
@@ -58,6 +59,7 @@ export function parse(rawData: Buffer): Metadata {
     orig_cause: data["orig_cause"]?.toString(),
     event_name: data["event_name"]?.toString(),
     environment: data["environment"]?.toString(),
+    case_reason: data["case_reason"]?.toString(),
   };
 
   return mapValues(md, (v) => v ?? "");

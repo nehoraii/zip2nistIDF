@@ -77,7 +77,7 @@ export function encode(md: Metadata, wsqInfos: WsqInfo[], dir: string): Buffer {
       [Fields2.EAL]: md.evid_acq_last_name,
       [Fields2.LCE]: md.finger_count.toString(),
       [Fields2.CFO]: md.orig_cause, // CFO_VALUES.Corpse,
-      [Fields2.CSR]: "",
+      [Fields2.CSR]: md.case_reason,
       [Fields2.EVNT]: md.event_name,
       [Fields2.CAL]: md.case_acq_loc_type, // CAL_VALUES.Field,
     },
