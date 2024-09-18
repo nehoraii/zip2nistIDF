@@ -88,7 +88,13 @@ export function encode(md: Metadata, wsqInfos: WsqInfo[], dir: string): Buffer {
     codecOptions: {
       default: {
         2: {
+          402: {
+            informationEncoder
+          },
           403: {
+            informationEncoder
+          },
+          404: {
             informationEncoder
           },
           406: {
@@ -97,9 +103,18 @@ export function encode(md: Metadata, wsqInfos: WsqInfo[], dir: string): Buffer {
           407: {
             informationEncoder
           },
+          409: {
+            informationEncoder
+          },
+          410: {
+            informationEncoder
+          },
           411: {
             informationEncoder
-          }
+          },
+          413: {
+            informationEncoder
+          },
         }
       }
     }
