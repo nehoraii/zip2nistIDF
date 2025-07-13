@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zip2nist
+  namespace: tikchalal-prod
+  labels:
+    app: zip2nist
+    project: zip2nist
+    env: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zip2nist
+  template:
+    metadata:
+      labels:
+        app: zip2nist
+        project: zip2nist
+        env: production
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "2222"
+    spec:
+      serviceAccountName: mezah-sa
+      imagePullSecrets:
+        - name: tikchalal-prod-pat
+      containers:
+        - name: zip2nist
+          image: ghcr.io/digitalidf/zip2nist/zip2nist:production
+          resources:
+            limits:
+              cpu: "0.5"
+              memory: "512Mi"
+            requests:
+              cpu: "0.25"
+              memory: "256Mi"
+          securityContext:
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - mountPath: /tmp
+              name: temp
+          ports:
+            - containerPort: 4000
+          imagePullPolicy: Always
+
+      volumes:
+        - name: temp
+          emptyDir:
+            sizeLimit: 500Mi
