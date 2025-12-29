@@ -14,7 +14,9 @@ FROM dev AS build
 
 COPY nbis/ /src
 WORKDIR /src
-RUN ./setup.sh /usr/local --STDLIBS --without-X11
+RUN chmod +x setup.sh && \
+    dos2unix setup.sh 2>/dev/null || sed -i 's/\r$//' setup.sh && \
+    ./setup.sh /usr/local --STDLIBS --without-X11
 
 RUN make config
 RUN make it
