@@ -27,7 +27,7 @@ spec:
         - name: tikchalal-preprod-pat
       containers:
         - name: zip2nist
-          image: ghcr.io/digitalidf/zip2nist/zip2nist:preprod
+          image: 651898668523.dkr.ecr.il-central-1.amazonaws.com/digitalidf/zip2nist/zip2nist:preprod
           resources:
             limits:
               cpu: "0.5"
