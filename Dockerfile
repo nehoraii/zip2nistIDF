@@ -14,9 +14,10 @@ FROM dev AS build
 
 COPY nbis/ /src/
 WORKDIR /src
-RUN chmod +x setup.sh && \
-    sed -i 's/\r$//' setup.sh && \
-    ./setup.sh /usr/local --STDLIBS --without-X11
+
+RUN chmod +x ./setup.sh
+RUN sed -i 's/\r$//' ./setup.sh
+RUN ./setup.sh /usr/local --STDLIBS --without-X11
 
 RUN make config
 RUN make it
