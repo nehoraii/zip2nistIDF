@@ -12,10 +12,10 @@ RUN update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-12 100
 # #####################################################
 FROM dev AS build
 
-COPY nbis/ /src
+COPY nbis/ /src/
 WORKDIR /src
 RUN chmod +x setup.sh && \
-    dos2unix setup.sh 2>/dev/null || sed -i 's/\r$//' setup.sh && \
+    sed -i 's/\r$//' setup.sh && \
     ./setup.sh /usr/local --STDLIBS --without-X11
 
 RUN make config
@@ -23,7 +23,7 @@ RUN make it
 RUN make install LIBNBIS=no
 
 # #####################################################
-FROM ubuntu:20.04 as deploy
+FROM ubuntu:20.04 AS deploy
 
 RUN apt-get update;
 
