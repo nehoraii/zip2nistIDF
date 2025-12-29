@@ -29,7 +29,7 @@ jobs:
       prod_account_name: 'hr'
       image: 'zip2nist'
       version: '${{ needs.get-short-sha.outputs.SHORT_SHA }}'
-      github_env: 'dev'
+      github_env: 'preprod'
       system_name: 'zip2nist'
 
   update-image-tag:
@@ -46,7 +46,7 @@ jobs:
   lock-prod-update:
     needs: [ update-image-tag ]
     runs-on: ubuntu-latest
-    environment: dev
+    environment: production
     steps:
       - name: Approve production release to continue
         run: echo "Approve production release to continue"
