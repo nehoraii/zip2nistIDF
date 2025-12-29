@@ -1,4 +1,4 @@
-name: (Preprod) Build, Push, Update Tag 
+name: (Prod) Build, Push, Update Tag 
 permissions: write-all
 
 on:
