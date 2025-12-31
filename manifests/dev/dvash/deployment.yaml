@@ -27,7 +27,7 @@ spec:
         - name: team-tikchalal-pat
       containers:
         - name: zip2nist
-          image: 119268605376.dkr.ecr.il-central-1.amazonaws.com/digitalidf/zip2nist/zip2nist:16eb572495af
+          image: 119268605376.dkr.ecr.il-central-1.amazonaws.com/digitalidf/zip2nist/zip2nist:8032fa318079
           resources:
             limits:
               cpu: "0.5"
