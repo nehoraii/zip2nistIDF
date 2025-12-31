@@ -1,0 +1,4 @@
+[submodule "nbis"]
+	path = nbis
+	url = https://github.com/DigitalIDF/nbis.git
+	branch = dev
