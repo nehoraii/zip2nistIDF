@@ -10,10 +10,7 @@ on:
       - '.github/workflows/**'
   workflow_dispatch:
 jobs: 
-  
 
-
-  
   get-short-sha:
     outputs:
       SHORT_SHA: ${{ steps.get_short_sha.outputs.SHORT_SHA }}

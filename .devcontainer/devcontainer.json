@@ -4,7 +4,7 @@
   "name": "Existing Dockerfile",
   "build": {
     "context": "..",
-    "dockerfile": "../Dockerfile",
+    "dockerfile": "../Dockerfile1",
     "target": "deploy"
   },
   // Features to add to the dev container. More info: https://containers.dev/features.
