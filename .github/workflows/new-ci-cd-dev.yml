@@ -27,17 +27,6 @@ jobs:
         id: short_sha_code
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
-      - name: Check Dockerfile change
-        id: dockerfile
-        run: |
-          git diff --name-only ${{ github.event.before }} ${{ github.sha }}
-          if git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -Eq "^(server\.js|Dockerfile1)$"; then
-            echo "changed=true" >> $GITHUB_OUTPUT
-            echo "Dockerfile or server.js changed → will push image"
-          else
-            echo "changed=false" >> $GITHUB_OUTPUT
-            echo "Dockerfile not changed → skipping image push"
-          fi
       
       - name: login to docker hub
         if: steps.dockerfile.outputs.changed == 'true'
