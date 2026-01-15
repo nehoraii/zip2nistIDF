@@ -4,7 +4,7 @@ permissions: write-all
 on:
   push:
     branches:
-      - dev
+      - dev2
     paths-ignore:
       - 'manifests/**'
       - '.github/workflows/**'

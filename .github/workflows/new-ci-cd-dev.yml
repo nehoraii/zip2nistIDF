@@ -2,7 +2,7 @@ name: Build and Push JS zip2nist Image
 
 on:
   push:
-    branches: [ zip2nistIDF ]
+    branches: [ dev ]
 
 
 jobs:
