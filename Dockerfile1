@@ -11,9 +11,9 @@ RUN update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-12 100
 
 # #####################################################
 FROM dev AS build
-RUN git clone --depth=1 https://github.com/DigitalIDF/nbis/tree/67e5472bc2f1546a69476dbbff6016cc4a57f1a7 nist
+RUN git clone --depth=1 https://github.com/DigitalIDF/nbis/tree/67e5472bc2f1546a69476dbbff6016cc4a57f1a7 /nist
 
-COPY nist/ /src/
+COPY /nist/ /src/
 WORKDIR /src
 
 RUN chmod +x ./setup.sh
