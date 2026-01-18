@@ -14,7 +14,7 @@ FROM dev AS build
 WORKDIR /nist
 RUN git clone https://github.com/DigitalIDF/nbis.git . \
  && git checkout 67e5472bc2f1546a69476dbbff6016cc4a57f1a7
-COPY /nist/ /src/
+COPY ./ /src/
 WORKDIR /src
 
 RUN chmod +x ./setup.sh
