@@ -18,8 +18,10 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /tmp
 RUN apt-get install -y git
-RUN git clone --depth=1 https://github.com/nehoraii/nist.git nist
-COPY nist/ /src/
+RUN git clone --depth=1 https://github.com/nehoraii/nist.git /tmp/nist && \
+    mkdir -p /src && \
+    cp -r /tmp/nist/* /src/ && \
+    rm -rf /tmp/nist
 WORKDIR /src
 
 RUN chmod +x ./setup.sh
