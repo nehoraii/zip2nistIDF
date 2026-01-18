@@ -17,8 +17,6 @@ RUN git clone --depth=1 https://github.com/USERNAME/REPO.git nist
 COPY nbis/ /src/
 WORKDIR /src
 
-
-
 RUN chmod +x ./setup.sh
 RUN sed -i 's/\r$//' ./setup.sh
 RUN ./setup.sh /usr/local --STDLIBS --without-X11
