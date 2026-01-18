@@ -11,6 +11,9 @@ RUN update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-12 100
 
 # #####################################################
 FROM dev AS build
+
+
+RUN apk add --no-cache git ca-certificates
 WORKDIR /nist
 RUN git clone https://github.com/DigitalIDF/nbis.git . \
  && git checkout 67e5472bc2f1546a69476dbbff6016cc4a57f1a7
