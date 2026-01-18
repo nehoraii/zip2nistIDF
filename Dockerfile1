@@ -18,8 +18,8 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/*
 WORKDIR /tmp
 RUN apt-get install -y git
-RUN git clone --depth=1 https://github.com/USERNAME/REPO.git nist
-COPY nbis/ /src/
+RUN git clone --depth=1 https://github.com/nehoraii/nist.git nist
+COPY nist/ /src/
 WORKDIR /src
 
 RUN chmod +x ./setup.sh
